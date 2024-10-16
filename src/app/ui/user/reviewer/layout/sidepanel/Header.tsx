@@ -12,7 +12,7 @@ interface Props {
 export default function Header({ isOpen, setIsOpen }: Props) {
   return (
     <div
-      className={`flex ${isOpen ? 'flex-row' : 'flex-col'} items-center justify-center gap-4 bg-yellowQuik px-4 py-4`}
+      className={`flex ${isOpen ? 'flex-row' : 'flex-col'} items-center justify-center gap-4 border-b border-b-gray-300 px-4 py-4`}
     >
       <div className={`${isOpen ? 'flex' : 'hidden'}`}>
         <LogoQuikFixs size={40} />
@@ -21,7 +21,7 @@ export default function Header({ isOpen, setIsOpen }: Props) {
         <IconQuikFixs size={40} />
       </div>
       <button
-        className="rounded-lg border border-transparent p-2 transition-all duration-150 hover:border-gray-500 hover:bg-yellow-500"
+        className="rounded-lg border border-transparent p-2 transition-all duration-150 hover:border-gray-400 hover:bg-gray-200"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <SignInIcon size={20} color="black" /> : <SignOutIcon size={20} color="black" />}
