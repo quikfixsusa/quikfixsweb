@@ -2,6 +2,9 @@
 import { ReviewerWrapper } from '@/app/lib/context/ReviewerContext';
 import Header from '@/app/ui/user/reviewer/layout/header/Header';
 import SidePanel from '@/app/ui/user/reviewer/layout/sidepanel/SidePanel';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -12,6 +15,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <Header />
           {children}
         </section>
+        <ToastContainer />
       </main>
     </ReviewerWrapper>
   );

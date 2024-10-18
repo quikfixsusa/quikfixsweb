@@ -1,29 +1,19 @@
-import FileCheckIcon from '@/app/components/svg/icons/FileCheckIcon';
 import { Dispatch, SetStateAction } from 'react';
 
-import TypeButton from './TypeButton';
+import Pagination from './Pagination';
 
-const buttons = [
-  {
-    icon: <FileCheckIcon size={20} />,
-    value: 'requirements',
-    title: 'Requirements',
-  },
-];
-
-export default function NavTypeCases({ type, setType }: { type: string; setType: Dispatch<SetStateAction<string>> }) {
+export default function NavTypeCases({
+  page,
+  count,
+  setPage,
+}: {
+  page: number;
+  count: number;
+  setPage: Dispatch<SetStateAction<number>>;
+}) {
   return (
-    <nav className="flex w-full items-center gap-10 border-b border-b-gray-300 px-8">
-      {buttons.map((button) => (
-        <TypeButton
-          key={button.value}
-          type={type}
-          icon={button.icon}
-          value={button.value}
-          title={button.title}
-          setType={setType}
-        />
-      ))}
+    <nav className="flex w-full items-center justify-end gap-10 border-b border-b-gray-300 px-8 py-3">
+      <Pagination page={page} count={count} setPage={setPage} />
     </nav>
   );
 }

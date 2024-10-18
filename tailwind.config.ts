@@ -40,7 +40,7 @@ const config: Config = {
       },
       flex: {
         3: '0 0 calc(33.33% - 12px)',
-        2: '0 0 calc(50% - 30px)',
+        2: '0 0 calc(50% - 12px)',
       },
     },
   },

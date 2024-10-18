@@ -1,6 +1,6 @@
 export default function UserSkeletonCard() {
   return (
-    <div className="flex-3 flex flex-col gap-3 rounded-xl border border-gray-300 p-4">
+    <div className="flex flex-3 flex-col gap-3 rounded-xl border border-gray-300 p-4">
       <div className="flex w-full items-center justify-between gap-2">
         <div className="h-4 w-[30%] animate-pulse rounded bg-gray-400" />
         <div className="h-4 w-[25%] animate-pulse rounded bg-gray-400" />

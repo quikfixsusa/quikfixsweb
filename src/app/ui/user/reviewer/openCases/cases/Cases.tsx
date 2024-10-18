@@ -1,9 +1,14 @@
 import Cards from './Cards';
 
-export default function Cases() {
+interface CasesProps {
+  usersData: any;
+  loading: boolean;
+}
+
+export default function Cases({ usersData, loading }: CasesProps) {
   return (
     <section className="flex w-full px-8 py-4">
-      <Cards />
+      <Cards loading={loading} usersData={usersData} />
     </section>
   );
 }

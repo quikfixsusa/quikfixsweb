@@ -1,6 +1,11 @@
 import UserIcon from '@/app/components/svg/icons/UserIcon';
+import { useReviewerContext } from '@/app/lib/context/ReviewerContext';
+import { db } from '@/app/lib/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
-export default function UserCard({ user }: { user: any }) {
+export default function UserCard({ userData }: { userData: any }) {
+  const { user } = useReviewerContext();
   function parseDate({ seconds, nanoseconds }: { seconds: number; nanoseconds: number }) {
     // Convierte seconds a milisegundos y nanoseconds a milisegundos
     const milliseconds = seconds * 1000 + nanoseconds / 1000000;
@@ -23,28 +28,58 @@ export default function UserCard({ user }: { user: any }) {
     if (userType === 'contractor') return 'Contractor';
     if (userType === 'driver') return 'Driver';
   }
+
+  async function acceptRequest() {
+    console.log('acceptRequest');
+    await updateDoc(doc(db, 'users', userData.id), { reviewer: user.id });
+  }
+
+  function toastiNoty() {
+    toast.promise(
+      acceptRequest,
+      {
+        pending: 'Accepting request',
+        success: 'Request accepted',
+        error: 'Error accepting request',
+      },
+      {
+        theme: 'dark',
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        pauseOnHover: true,
+        progress: undefined,
+        closeButton: true,
+      },
+    );
+  }
   return (
-    <div className="flex-3 flex flex-col gap-3 rounded-xl border border-gray-300 p-4">
+    <div className="flex flex-2 flex-col gap-3 rounded-xl border border-gray-300 p-4 lg:flex-3">
       <div className="flex w-full items-center justify-between gap-2">
-        <p className="text-sm font-medium text-gray-600">{parseDate(user.createdAt)}</p>
-        <p className="rounded-sm bg-yellowQuik px-4 text-sm text-black">{parseUserType(user.userType)}</p>
+        <p className="text-sm font-medium text-gray-600">{parseDate(userData.createdAt)}</p>
+        <p className="rounded-sm bg-yellowQuik px-4 text-sm text-black">{parseUserType(userData.userType)}</p>
       </div>
       <div className="flex items-center gap-3">
-        {!user.image && (
+        {!userData.image && (
           <div className="rounded-full bg-gray-200 p-[13px]">
             <UserIcon size={18} color="gray" />
           </div>
         )}
-        {user.image && <img alt={user.username} className="h-11 w-11 rounded-full" src={user.image} />}
+        {userData.image && (
+          <img alt={userData.username} width={44} height={44} className="h-11 w-11 rounded-full" src={userData.image} />
+        )}
         <div>
           <p className="font-semibold">
-            {user.firstName} {user.lastName}
+            {userData.firstName ? `${userData.firstName} ${userData.lastName}` : userData.businessName}
           </p>
-          <p className="text-xs text-gray-600">{user.email}</p>
+          <p className="text-xs text-gray-600">{userData.email}</p>
         </div>
       </div>
       <hr />
-      <button className="w-full rounded-md bg-blueQuik py-2 font-medium text-white transition-all duration-150 hover:bg-blue-700">
+      <button
+        onClick={toastiNoty}
+        className="w-full rounded-md bg-blueQuik py-2 font-medium text-white transition-all duration-150 hover:bg-blue-700"
+      >
         Accept
       </button>
     </div>
