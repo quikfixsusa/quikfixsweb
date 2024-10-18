@@ -23,7 +23,7 @@ export async function GET() {
     if (!userFind.exists()) {
       return NextResponse.json({ message: 'Unautorized' }, { status: 401 });
     }
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json({ id, ...user }, { status: 200 });
   } catch (error) {
     return NextResponse.json(error, { status: 400 });
   }

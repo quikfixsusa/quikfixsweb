@@ -8,6 +8,9 @@ export async function middleware(request: NextRequest) {
   if (!token && !request.nextUrl.pathname.startsWith('/auth/login')) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
+  if (!token && request.nextUrl.pathname.startsWith('/user')) {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
   try {
     const secret = process.env.JWT_SECRET || '';
     const verifiedToken = await jwtVerify(token, new TextEncoder().encode(secret));
