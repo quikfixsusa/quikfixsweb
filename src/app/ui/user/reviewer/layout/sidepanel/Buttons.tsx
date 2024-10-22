@@ -1,5 +1,5 @@
 import HomeIcon from '@/app/components/svg/icons/HomeIcon';
-import InProgressIcon from '@/app/components/svg/icons/InProgressIcon';
+import MyCasesIcon from '@/app/components/svg/icons/MyCasesIcon';
 import OpenCasesIcon from '@/app/components/svg/icons/OpenCasesIcon';
 import SettingsIcon from '@/app/components/svg/icons/SettingsIcon';
 import { useReviewerContext } from '@/app/lib/context/ReviewerContext';
@@ -9,7 +9,7 @@ import UserCard from './UserCard';
 
 const buttonsData = [
   { name: 'Dashboard', icon: <HomeIcon size={20} />, rute: '/user/reviewer' },
-  { name: 'In Progress', icon: <InProgressIcon size={20} />, rute: '/user/reviewer/inprogress' },
+  { name: 'My Cases', icon: <MyCasesIcon size={20} />, rute: '/user/reviewer/mycases' },
   { name: 'Open Cases', icon: <OpenCasesIcon size={20} />, rute: '/user/reviewer/opencases' },
   { name: 'Settings', icon: <SettingsIcon size={20} />, rute: '/user/reviewer/settings' },
   // Add more buttons as needed

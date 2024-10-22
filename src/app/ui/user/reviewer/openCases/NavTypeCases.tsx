@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import Pagination from './Pagination';
+import Pagination from '../../../../components/Pagination';
 
 export default function NavTypeCases({
   page,

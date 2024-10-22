@@ -1,11 +1,11 @@
 'use client';
+import HeaderSectionDashboard from '@/app/components/HeaderSectionDashboard';
 import { useReviewerContext } from '@/app/lib/context/ReviewerContext';
 import { db } from '@/app/lib/firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 import Cases from './cases/Cases';
-import HeaderCases from './HeaderCases';
 import NavTypeCases from './NavTypeCases';
 
 export default function OpenCasesView() {
@@ -26,7 +26,6 @@ export default function OpenCasesView() {
   useEffect(() => {
     if (user) {
       const unsub = onSnapshot(query(collection(db, 'users'), where('reviewer', '==', null)), (docs) => {
-        console.log(docs);
         if (docs.size > 0) {
           const data = docs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
           setUsersData(sortByCreatedAt(data));
@@ -40,7 +39,10 @@ export default function OpenCasesView() {
   }, [user]);
   return (
     <div className="flex h-full flex-col items-start overflow-auto overflow-x-hidden">
-      <HeaderCases />
+      <HeaderSectionDashboard
+        title="Open Cases"
+        description="accepts requests from contractors to verify their requirements"
+      />
       <NavTypeCases page={page} setPage={setPage} count={usersData.length} />
       <Cases usersData={usersData.slice((page - 1) * 6, (page - 1) * 6 + 6)} loading={loading} />
     </div>

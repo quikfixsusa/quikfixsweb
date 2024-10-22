@@ -19,7 +19,7 @@ export default function TypeButton({
   return (
     <button
       onClick={handleClick}
-      className={`flex gap-2 px-6 py-4 ${type === value ? 'border-b-4 border-b-blueQuik text-blueQuik' : 'border-b-0 text-black'}`}
+      className={`flex items-center gap-2 px-6 py-4 ${type === value ? 'border-b-4 border-b-blueQuik text-blueQuik' : 'border-b-0 text-black'}`}
     >
       {icon}
       <p>{title}</p>
