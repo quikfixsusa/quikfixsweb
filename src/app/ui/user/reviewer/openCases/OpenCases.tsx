@@ -3,6 +3,7 @@ import HeaderSectionDashboard from '@/app/components/HeaderSectionDashboard';
 import { useReviewerContext } from '@/app/lib/context/ReviewerContext';
 import { db } from '@/app/lib/firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import Cases from './cases/Cases';
@@ -12,7 +13,10 @@ export default function OpenCasesView() {
   const { user } = useReviewerContext();
   const [usersData, setUsersData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const searchParams = useSearchParams();
+
+  const searchPage = searchParams.get('page');
+  const page = searchPage !== null ? parseInt(searchPage) : 1;
 
   function sortByCreatedAt(arr: any[]) {
     return arr.sort((a, b) => {
@@ -43,7 +47,7 @@ export default function OpenCasesView() {
         title="Open Cases"
         description="accepts requests from contractors to verify their requirements"
       />
-      <NavTypeCases page={page} setPage={setPage} count={usersData.length} />
+      <NavTypeCases count={usersData.length} />
       <Cases usersData={usersData.slice((page - 1) * 6, (page - 1) * 6 + 6)} loading={loading} />
     </div>
   );

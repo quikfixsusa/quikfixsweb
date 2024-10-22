@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export default function TypeButton({
   icon,
   value,
@@ -11,7 +9,7 @@ export default function TypeButton({
   value: string;
   title: string;
   type: string;
-  setType: Dispatch<SetStateAction<string>>;
+  setType: (type: string) => void;
 }) {
   const handleClick = () => {
     setType(value);

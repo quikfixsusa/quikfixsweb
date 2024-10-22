@@ -1,15 +1,18 @@
 'use client';
 import HeaderSectionDashboard from '@/app/components/HeaderSectionDashboard';
 import { useReviewerContext } from '@/app/lib/context/ReviewerContext';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import Cards from './Cards';
 import NavType from './NavType';
 
 export default function MyCases() {
-  const [type, setType] = useState('inprogress');
-  const [page, setPage] = useState(1);
   const { inProgressUsers } = useReviewerContext();
+  const searchParams = useSearchParams();
+
+  const searchPage = searchParams.get('page');
+  const page = searchPage !== null ? parseInt(searchPage) : 1;
+  const type = searchParams.get('type') || 'inprogress';
 
   const getUsersByType = (type: string) => {
     if (type === 'inprogress') {
@@ -28,8 +31,8 @@ export default function MyCases() {
   return (
     <div className="flex h-full flex-col items-start overflow-auto overflow-x-hidden">
       <HeaderSectionDashboard title="My Cases" description="verify the requirements sent by users" />
-      <NavType page={page} count={inProgressUsers.length} setPage={setPage} type={type} setType={setType} />
-      <Cards users={getUsersByType(type)} />
+      <NavType count={inProgressUsers.length} />
+      <Cards users={getUsersByType(type).slice((page - 1) * 6, (page - 1) * 6 + 6)} />
     </div>
   );
 }

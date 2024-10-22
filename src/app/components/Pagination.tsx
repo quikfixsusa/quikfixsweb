@@ -1,29 +1,24 @@
-import { Dispatch, SetStateAction } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
-export default function Pagination({
-  page,
-  count,
-  setPage,
-}: {
-  page: number;
-  count: number;
-  setPage: Dispatch<SetStateAction<number>>;
-}) {
+export default function Pagination({ count }: { count: number }) {
   const ITEM_PER_PAGE = 6;
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
 
-  const hasPrev = ITEM_PER_PAGE * (page - 1) > 0;
-  const hasNext = ITEM_PER_PAGE * (page - 1) + ITEM_PER_PAGE < count;
+  const page = searchParams.get('page') || '1';
+
+  const params = new URLSearchParams(searchParams);
+
+  const hasPrev = ITEM_PER_PAGE * (parseInt(page) - 1) > 0;
+  const hasNext = ITEM_PER_PAGE * (parseInt(page) - 1) + ITEM_PER_PAGE < count;
   const maxPage = Math.ceil(count / ITEM_PER_PAGE);
 
-  const handlePrev = () => {
-    if (hasPrev) {
-      setPage(page - 1);
-    }
-  };
-  const handleNext = () => {
-    if (hasNext) {
-      setPage(page + 1);
-    }
+  const handleChangePage = (type: string) => {
+    type === 'prev'
+      ? params.set('page', (parseInt(page) - 1).toString())
+      : params.set('page', (parseInt(page) + 1).toString());
+    replace(`${pathname}?${params}`);
   };
   return (
     <div className="flex justify-center">
@@ -31,7 +26,7 @@ export default function Pagination({
         <button
           className="rounded-l-md border border-gray-300 bg-gray-200 px-4 disabled:cursor-not-allowed disabled:bg-gray-300"
           disabled={!hasPrev}
-          onClick={handlePrev}
+          onClick={() => handleChangePage('prev')}
         >
           «
         </button>
@@ -41,7 +36,7 @@ export default function Pagination({
         <button
           className="rounded-r-md border border-gray-300 bg-gray-200 px-4 disabled:cursor-not-allowed disabled:bg-gray-300"
           disabled={!hasNext}
-          onClick={handleNext}
+          onClick={() => handleChangePage('next')}
         >
           »
         </button>
