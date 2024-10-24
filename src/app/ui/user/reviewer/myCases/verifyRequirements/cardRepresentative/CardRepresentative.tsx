@@ -9,7 +9,7 @@ export default function CardRepresentative({ data }: { data: Representative }) {
   const [open, setOpen] = useState(false);
   const verificationSteps = `1. Find the State: Determine which state issued the driver's license.\n2. Visit the DMV Website: Go to the website of the Department of Motor Vehicles (DMV) for that state.\n3. Look for the Verification Tool: Search for a section or tool on the website that allows you to verify driver's licenses.\n4. Enter the Information: Follow the on-screen instructions. You'll usually need to enter the driver's license number`;
   return (
-    <div className="flex max-w-[65%] flex-col rounded-lg border border-gray-300 p-6">
+    <div className="flex flex-col rounded-lg border border-gray-300 p-6">
       <Header
         title={'Business Representative'}
         description={'Person who represents the company'}

@@ -9,7 +9,7 @@ export default function CardRequirement({ data }: { data: Requirement }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex max-w-[65%] flex-col rounded-lg border border-gray-300 p-6">
+    <div className="flex flex-col rounded-lg border border-gray-300 p-6">
       <Header title={data.title} description={data.description} open={open} setOpen={setOpen} status={data.status} />
       {open && (
         <ContentCard
