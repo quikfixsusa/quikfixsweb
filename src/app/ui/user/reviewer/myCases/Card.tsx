@@ -2,6 +2,7 @@
 import IdIcon from '@/app/components/svg/icons/IdIcon';
 import UserIcon from '@/app/components/svg/icons/UserIcon';
 import { User } from '@/app/lib/definitions';
+import Link from 'next/link';
 
 export default function Card({ userData }: { userData: User }) {
   function parseDate({ seconds, nanoseconds }: { seconds: number; nanoseconds: number }) {
@@ -77,12 +78,12 @@ export default function Card({ userData }: { userData: User }) {
         ))}
       </div>
       <hr />
-      <button
-        onClick={() => console.log('Accept')}
-        className="w-full rounded-md bg-blueQuik py-2 font-medium text-white transition-all duration-150 hover:bg-blue-700"
+      <Link
+        href={`/user/reviewer/mycases/${userData.id}`}
+        className="w-full rounded-md bg-blueQuik py-2 text-center font-medium text-white transition-all duration-150 hover:bg-blue-700"
       >
         Verify Requirements
-      </button>
+      </Link>
     </div>
   );
 }

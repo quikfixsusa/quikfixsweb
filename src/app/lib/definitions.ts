@@ -62,7 +62,7 @@ export interface CreatedAt {
 export interface Representative {
   driverLicense: string;
   jobTitle: string;
-  status: string;
+  status: 'reception' | 'inReview' | 'edit' | 'approved';
   lastName: string;
   phoneNumber: string;
   email: string;
@@ -74,6 +74,7 @@ export interface Requirement {
   title: string;
   description: string;
   link: string;
+  verificationSteps: string;
   note: string;
   format: string;
   status: 'reception' | 'inReview' | 'edit' | 'approved';
