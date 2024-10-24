@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Buttons from './Buttons';
 
 interface Props {
+  id: string;
   verificationSteps: string;
   note: string;
   link: string;
@@ -12,7 +13,7 @@ interface Props {
   status: 'reception' | 'inReview' | 'edit' | 'approved';
 }
 
-export default function ContentCard({ verificationSteps, note, link, status, name, phoneNumber, jobTitle }: Props) {
+export default function ContentCard({ id, verificationSteps, note, link, status, name, phoneNumber, jobTitle }: Props) {
   function formatText(text: string) {
     return text.split('\n').map((line, index) => (
       <p className="text-gray-600" key={index}>
@@ -82,7 +83,7 @@ export default function ContentCard({ verificationSteps, note, link, status, nam
             View Attached Document
           </Link>
         )}
-        <Buttons status={status} />
+        <Buttons status={status} id={id} />
       </div>
     </div>
   );

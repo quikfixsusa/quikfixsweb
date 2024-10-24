@@ -7,9 +7,11 @@ interface Props {
   note: string;
   link: string;
   status: 'reception' | 'inReview' | 'edit' | 'approved';
+  id: string;
+  title: string;
 }
 
-export default function ContentCard({ verificationSteps, note, link, status }: Props) {
+export default function ContentCard({ verificationSteps, note, link, status, id, title }: Props) {
   function formatText(text: string) {
     return text.split('\n').map((line, index) => (
       <p className="text-gray-600" key={index}>
@@ -71,7 +73,7 @@ export default function ContentCard({ verificationSteps, note, link, status }: P
             View Attached Document
           </Link>
         )}
-        <Buttons status={status} />
+        <Buttons status={status} id={id} title={title} />
       </div>
     </div>
   );

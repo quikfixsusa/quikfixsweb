@@ -4,8 +4,8 @@ import { useReviewerContext } from '@/app/lib/context/ReviewerContext';
 import Link from 'next/link';
 
 import RequirementsSection from './Requirements';
-import UserCard from './UserCard';
 import RequirementsSectionSkeleton from './RequirementsSkeleton';
+import UserCard from './UserCard';
 
 export default function VerifyRequirements({ id }: { id: string }) {
   const { inProgressUsers, loadingInProgress } = useReviewerContext();

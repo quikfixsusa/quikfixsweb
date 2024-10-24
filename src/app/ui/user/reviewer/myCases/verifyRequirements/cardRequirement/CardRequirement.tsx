@@ -5,7 +5,7 @@ import { useState } from 'react';
 import ContentCard from './ContentCard';
 import Header from './Header';
 
-export default function CardRequirement({ data }: { data: Requirement }) {
+export default function CardRequirement({ data, id }: { data: Requirement; id: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -17,6 +17,8 @@ export default function CardRequirement({ data }: { data: Requirement }) {
           status={data.status}
           link={data.link}
           note={data.note}
+          title={data.title}
+          id={id}
         />
       )}
     </div>
