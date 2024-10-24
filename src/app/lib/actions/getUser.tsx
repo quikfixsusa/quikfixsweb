@@ -1,11 +1,11 @@
 import { COOKIE_SESSION_NAME } from '@/app/constants';
 import { doc, getDoc } from 'firebase/firestore';
 import { verify } from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
 
 import { db } from '../firebase';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
 
 export async function getUser() {
   const cookieStore = cookies();
