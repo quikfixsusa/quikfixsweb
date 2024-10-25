@@ -101,6 +101,7 @@ export default function Buttons({ status, id, title }: Props) {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Submit Rejection',
       showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
       inputValidator: (result) => {
         console.log(result);
         if (!result) {
