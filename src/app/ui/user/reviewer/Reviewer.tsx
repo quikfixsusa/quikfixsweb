@@ -1,9 +1,14 @@
 'use client';
 
+import HeaderSectionDashboard from '@/app/components/HeaderSectionDashboard';
+
+import DashboardContent from './dashboard/DasboardContent';
+
 export default function Reviewer() {
   return (
-    <div className="flex h-full items-center justify-center">
-      <h2 className="text-4xl font-bold">Dashboard</h2>
+    <div className="flex h-full flex-col items-start overflow-auto overflow-x-hidden">
+      <HeaderSectionDashboard title="Reviewer Dashboard" description="Review users" />
+      <DashboardContent />
     </div>
   );
 }
