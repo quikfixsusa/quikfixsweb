@@ -13,7 +13,7 @@ interface Props {
 
 export default function ContentCard({ verificationSteps, note, link, status, id, title }: Props) {
   function formatText(text: string) {
-    return text.split('\n').map((line, index) => (
+    return text.split('*').map((line, index) => (
       <p className="text-gray-600" key={index}>
         {line}
         <br />
