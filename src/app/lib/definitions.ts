@@ -70,10 +70,16 @@ export interface Representative {
   note: string;
 }
 
+export interface SingleDoc {
+  status: string;
+  link: string;
+}
+
 export interface Requirement {
   title: string;
   description: string;
-  link: string;
+  link: string | SingleDoc[];
+  multiple: boolean;
   verificationSteps: string;
   note: string;
   format: string;

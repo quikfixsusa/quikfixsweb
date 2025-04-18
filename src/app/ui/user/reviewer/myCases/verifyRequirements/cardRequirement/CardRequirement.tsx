@@ -18,6 +18,7 @@ export default function CardRequirement({ data, id }: { data: Requirement; id: s
           link={data.link}
           note={data.note}
           title={data.title}
+          multiple={data.multiple}
           id={id}
         />
       )}
