@@ -1,3 +1,4 @@
+import { type SingleDoc } from '@/app/lib/definitions';
 import { db } from '@/app/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import Swal from 'sweetalert2';
@@ -6,9 +7,12 @@ interface Props {
   status: 'reception' | 'inReview' | 'edit' | 'approved';
   id: string;
   title: string;
+  multiple: boolean;
+  link: string | SingleDoc[];
+  checked: number;
 }
 
-export default function Buttons({ status, id, title }: Props) {
+export default function Buttons({ status, id, title, multiple, link, checked }: Props) {
   const verifyRequirement = async () => {
     const userRef = doc(db, 'users', id);
     const userDoc = await getDoc(userRef);
@@ -18,10 +22,17 @@ export default function Buttons({ status, id, title }: Props) {
     const user = userDoc.data();
 
     const requirement = user.requirements.findIndex((req: any) => req.title === title);
-    user.requirements[requirement] = {
-      ...user.requirements[requirement],
-      status: 'approved',
-    };
+
+    if (multiple) {
+      user.requirements[requirement].link[checked].status = 'approved';
+      const isAllApproved = user.requirements[requirement].link.every((doc: SingleDoc) => doc.status === 'approved');
+      if (isAllApproved) {
+        user.requirements[requirement].status = 'approved';
+      }
+    } else {
+      user.requirements[requirement].status = 'approved';
+    }
+
     const isInReview = user.requirements.some((req: any) => req.status !== 'approved');
 
     await updateDoc(userRef, { requirements: user.requirements, requirementsInReview: isInReview });
@@ -35,11 +46,12 @@ export default function Buttons({ status, id, title }: Props) {
     }
     const user = userDoc.data();
     const requirement = user.requirements.findIndex((req: any) => req.title === title);
-    user.requirements[requirement] = {
-      ...user.requirements[requirement],
-      status: 'edit',
-      note: note,
-    };
+
+    if (multiple) {
+      user.requirements[requirement].link[checked].status = 'edit';
+    }
+    user.requirements[requirement].status = 'edit';
+    user.requirements[requirement].note = note;
 
     await updateDoc(userRef, { requirements: user.requirements });
   };
@@ -129,7 +141,10 @@ export default function Buttons({ status, id, title }: Props) {
       }
     });
   };
-  if (status === 'inReview') {
+  if (
+    (!multiple && status === 'inReview') ||
+    (multiple && typeof link !== 'string' && link[checked].status === 'inReview')
+  ) {
     return (
       <div className="flex gap-2">
         <button

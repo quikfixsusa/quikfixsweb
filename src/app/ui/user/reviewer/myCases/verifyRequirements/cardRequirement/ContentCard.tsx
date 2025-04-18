@@ -1,5 +1,7 @@
+'use client';
 import { SingleDoc } from '@/app/lib/definitions';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import Buttons from './Buttons';
 
@@ -14,6 +16,8 @@ interface Props {
 }
 
 export default function ContentCard({ verificationSteps, note, link, status, id, title, multiple }: Props) {
+  const [checked, setChecked] = useState(0);
+
   function formatText(text: string) {
     return text.split('*').map((line, index) => (
       <p className="text-gray-600" key={index}>
@@ -94,6 +98,7 @@ export default function ContentCard({ verificationSteps, note, link, status, id,
           <div className="flex flex-col gap-2">
             {link.map((link, index) => (
               <div key={index} className="flex flex-row gap-3">
+                <input type="checkbox" checked={checked === index} onClick={() => setChecked(index)} />
                 <Link className="text-lg font-medium text-blue-600 hover:underline" href={link.link} target="_blank">
                   View Attached Document {index + 1}
                 </Link>
@@ -104,7 +109,7 @@ export default function ContentCard({ verificationSteps, note, link, status, id,
             ))}
           </div>
         )}
-        <Buttons status={status} id={id} title={title} />
+        <Buttons multiple={multiple} checked={checked} link={link} status={status} id={id} title={title} />
       </div>
     </div>
   );
