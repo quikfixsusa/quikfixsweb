@@ -25,6 +25,7 @@ export interface ButtonSidepanelProps extends itemList {
 
 export interface User {
   id: string;
+  availableCategories: string[];
   jobsRejectedCount: number;
   firstName?: string;
   lastName?: string;
@@ -84,4 +85,5 @@ export interface Requirement {
   note: string;
   format: string;
   status: 'reception' | 'inReview' | 'edit' | 'approved';
+  unblockCategories?: boolean;
 }

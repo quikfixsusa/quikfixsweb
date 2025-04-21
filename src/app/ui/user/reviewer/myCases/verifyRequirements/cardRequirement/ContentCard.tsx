@@ -1,9 +1,12 @@
 'use client';
-import { SingleDoc } from '@/app/lib/definitions';
+import { SingleDoc, User } from '@/app/lib/definitions';
+import { db } from '@/app/lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Buttons from './Buttons';
+import SelectCategories from './SelectCategories';
 
 interface Props {
   verificationSteps: string;
@@ -13,10 +16,47 @@ interface Props {
   id: string;
   title: string;
   multiple: boolean;
+  user: User;
+  unblockCategories?: boolean;
 }
 
-export default function ContentCard({ verificationSteps, note, link, status, id, title, multiple }: Props) {
+export interface CategoryType {
+  name: string;
+  checked: boolean;
+}
+
+export default function ContentCard({
+  verificationSteps,
+  note,
+  link,
+  status,
+  id,
+  title,
+  multiple,
+  user,
+  unblockCategories,
+}: Props) {
   const [checked, setChecked] = useState(0);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+
+  async function getCategoriesDB() {
+    const categoriesRef = collection(db, 'categories');
+    try {
+      const categoriesSnap = await getDocs(categoriesRef);
+      if (categoriesSnap.empty) {
+        console.log('No categories found');
+        return;
+      }
+      const categoriesData = categoriesSnap.docs.map((doc) => doc.data());
+      const categoriesList = categoriesData.map((category) => ({
+        name: category.name,
+        checked: false,
+      }));
+      setCategories(categoriesList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function formatText(text: string) {
     return text.split('*').map((line, index) => (
@@ -71,6 +111,12 @@ export default function ContentCard({ verificationSteps, note, link, status, id,
         return 'bg-yellow-200 text-yellow-700';
     }
   }
+
+  useEffect(() => {
+    if (unblockCategories) {
+      getCategoriesDB();
+    }
+  }, []);
   return (
     <div className="mt-4 flex flex-col gap-4">
       <div>
@@ -88,7 +134,7 @@ export default function ContentCard({ verificationSteps, note, link, status, id,
           <p className="text-sm text-red-600">{note}</p>
         </div>
       )}
-      <div className="flex items-end justify-between gap-3">
+      <div className="flex justify-between gap-12">
         {!multiple && typeof link === 'string' && (
           <Link className="text-lg font-medium text-blue-600 hover:underline" href={link} target="_blank">
             View Attached Document
@@ -109,7 +155,33 @@ export default function ContentCard({ verificationSteps, note, link, status, id,
             ))}
           </div>
         )}
-        <Buttons multiple={multiple} checked={checked} link={link} status={status} id={id} title={title} />
+        <div className="flex flex-1 flex-col items-end gap-6">
+          {typeof link !== 'string' && link[checked].status === 'inReview' && unblockCategories && (
+            <SelectCategories
+              categories={categories.filter((category) => !user.availableCategories.includes(category.name))}
+              checked={checked}
+              setCategories={setCategories}
+            />
+          )}
+          {typeof link === 'string' && status === 'inReview' && unblockCategories && (
+            <SelectCategories
+              categories={categories.filter((category) => !user.availableCategories.includes(category.name))}
+              checked={checked}
+              setCategories={setCategories}
+            />
+          )}
+          <Buttons
+            multiple={multiple}
+            checked={checked}
+            link={link}
+            status={status}
+            id={id}
+            title={title}
+            categories={categories}
+            setCategories={setCategories}
+            unblockCategories={unblockCategories}
+          />
+        </div>
       </div>
     </div>
   );
