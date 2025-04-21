@@ -192,7 +192,7 @@ export default function Buttons({
         </button>
         <button
           onClick={handleReject}
-          disabled={status !== 'inReview' || (unblockCategories && !categories.some((item) => item.checked))}
+          disabled={status !== 'inReview'}
           className="rounded-md border border-gray-300 bg-red-500 px-3 py-2 font-medium text-white transition-all duration-150 hover:bg-red-600 disabled:cursor-none"
         >
           Reject
