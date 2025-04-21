@@ -1,11 +1,11 @@
 'use client';
-import { Requirement } from '@/app/lib/definitions';
+import { Requirement, User } from '@/app/lib/definitions';
 import { useState } from 'react';
 
 import ContentCard from './ContentCard';
 import Header from './Header';
 
-export default function CardRequirement({ data, id }: { data: Requirement; id: string }) {
+export default function CardRequirement({ data, id, user }: { data: Requirement; id: string; user: User }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -13,6 +13,7 @@ export default function CardRequirement({ data, id }: { data: Requirement; id: s
       <Header title={data.title} description={data.description} open={open} setOpen={setOpen} status={data.status} />
       {open && (
         <ContentCard
+          unblockCategories={data.unblockCategories}
           verificationSteps={data.verificationSteps}
           status={data.status}
           link={data.link}
@@ -20,6 +21,7 @@ export default function CardRequirement({ data, id }: { data: Requirement; id: s
           title={data.title}
           multiple={data.multiple}
           id={id}
+          user={user}
         />
       )}
     </div>
