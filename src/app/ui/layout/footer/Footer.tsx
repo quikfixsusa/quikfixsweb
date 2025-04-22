@@ -1,5 +1,6 @@
 'use client';
-import LogoQuikFixs from '@/app/components/svg/LogoQuikFixs';
+import LogoRideNow from '@/app/components/svg/LogoQuikFixs';
+import Link from 'next/link';
 
 import ButtonsStores from './ButtonsStores';
 import FollowUs from './FollowUs';
@@ -12,17 +13,33 @@ export default function Footer() {
         <div className="flex flex-col items-start justify-between gap-6 py-7 md:flex-row md:gap-0 md:py-12">
           <div className="flex flex-col-reverse gap-8 md:flex-col md:gap-4">
             <div>
-              <LogoQuikFixs size={48} />
+              <LogoRideNow size={48} />
             </div>
             <FollowUs />
           </div>
           <div className="flex max-w-full flex-col gap-4 md:max-w-[45%]">
-            <h3 className="text-2xl font-bold md:text-4xl">The solution to your problems, in the blink of an eye.</h3>
+            <div>
+              <h3 className="text-2xl font-light md:text-4xl">The solution to your problems</h3>
+              <h3 className="text-2xl font-bold md:text-4xl">In the blink of eye.</h3>
+            </div>
             <ButtonsStores />
           </div>
         </div>
-        <div className="h-[1px] w-full bg-black" />
-        <p className="pt-8 text-center text-sm md:text-base">© 2024 Quikfixs. All rights reserved.</p>
+        <div className="h-[0.5px] w-full bg-black" />
+        <div className="flex flex-col items-center justify-center gap-8 pt-8 md:flex-row-reverse">
+          <p className="text-center text-sm md:text-base">© 2025 QUIKFIXS INC.</p>
+          <div className="flex items-center justify-center gap-8">
+            <Link href="/terms" className="text-sm underline md:text-base">
+              Terms
+            </Link>
+            <Link href="/privacy" className="text-sm underline md:text-base">
+              Privacy
+            </Link>
+            <Link href="/cookies" className="text-sm underline md:text-base">
+              Cookies
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
