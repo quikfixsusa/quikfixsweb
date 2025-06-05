@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
         <div className="h-[0.5px] w-full bg-black" />
         <div className="flex flex-col items-center justify-center gap-8 pt-8 md:flex-row-reverse">
-          <p className="text-center text-sm md:text-base">© 2025 QUIKFIXS INC.</p>
+          <p className="text-center text-sm md:text-base">© 2025 QUIKFIXS SERVICES INC.</p>
           <div className="flex items-center justify-center gap-8">
             <Link href="/terms" className="text-sm underline md:text-base">
               Terms
